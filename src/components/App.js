@@ -21,6 +21,10 @@ const App = () => {
       })
   }, [])
 
+  let inputText = (e) => setText((text) => (text = e.target.value))
+
+  let pushText =() => pushMessage({ text: text })
+
   return (
     <>
       {messages.map((message) => (
@@ -28,16 +32,16 @@ const App = () => {
           {message.text}
         </div>
       ))}
-      <div class="form">
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText((text) => (text = e.target.value))}
-        />
-        <button onClick={() => pushMessage({ text: text })}>
-          push
-        </button>
-      </div>
+        <div class="form">
+          <input
+            type="text"
+            value={text}
+            onChange={inputText}
+          />
+          <button onClick={pushText}>
+            push
+          </button>
+        </div>
     </>
   )
 }
