@@ -1,28 +1,21 @@
-import { useState } from 'react'
-import { pushMessage } from '../firebase'
+import { memo } from 'react'
+import Message from './Message'
+import useApp from '../hooks/useApp'
 
-const App = () => {
-  const [data, setData] = useState({ name: 'default', text: 'text' })
-
-  const setNameFunc = (e) => {
-    setData((prevData) => ({ ...prevData, name: e.target.value }))
-  }
-
-  const setTextFunc = (e) => {
-    setData((prevData) => ({ ...prevData, text: e.target.value }))
-  }
-
-  const pushMessageToFirebase = () => {
-    pushMessage({ ...data })
-  }
+const App = memo(() => {
+  const { setNameFunc, setTextFunc, pushMessageToFirebase, messages, data } =
+    useApp()
 
   return (
     <>
+      {messages.map((message) => (
+        <Message key={message.key} message={message} />
+      ))}
       <input type="text" value={data.name} onChange={(e) => setNameFunc(e)} />
       <input type="text" value={data.text} onChange={(e) => setTextFunc(e)} />
       <button onClick={() => pushMessageToFirebase()}>push</button>
     </>
   )
-}
+})
 
 export default App
