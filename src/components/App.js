@@ -1,21 +1,45 @@
-import { memo } from 'react'
-import Message from './Message'
-import useApp from '../hooks/useApp'
+import { useState, useEffect } from "react"
+import { messagesRef, pushMessage } from "../firebase"
 
-const App = memo(() => {
-  const { setNameFunc, setTextFunc, pushMessageToFirebase, messages, data } =
-    useApp()
+const App = () => {
+  const [text, setText] = useState("メッセージを入力")
+  const [messages, setMessages] = useState([])
+
+  useEffect(() => {
+    messagesRef
+      .orderByKey()
+      .limitToLast(10)
+      .on("value", (snapshot) => {
+        const messages = snapshot.val()
+        if (messages === null) return
+        const entries = Object.entries(messages)
+        const newMessages = entries.map((data) => {
+          const [key, message] = data
+          return { key, ...message }
+        })
+        setMessages(newMessages)
+      })
+  }, [])
 
   return (
     <>
       {messages.map((message) => (
-        <Message key={message.key} message={message} />
+        <div key={message.key}>
+          {message.text}
+        </div>
       ))}
-      <input type="text" value={data.name} onChange={(e) => setNameFunc(e)} />
-      <input type="text" value={data.text} onChange={(e) => setTextFunc(e)} />
-      <button onClick={() => pushMessageToFirebase()}>push</button>
+      <div class="form">
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText((text) => (text = e.target.value))}
+        />
+        <button onClick={() => pushMessage({ text: text })}>
+          push
+        </button>
+      </div>
     </>
   )
-})
+}
 
 export default App
