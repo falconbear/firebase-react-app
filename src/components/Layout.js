@@ -1,10 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link, Outlet } from 'react-router-dom'
 import { useStateContext } from '../context/StateProvider'
 import { LogoutIcon } from '@heroicons/react/outline'
+import Modal from './Modal'
+
 const Layout = () => {
   const { serviceName, isLogin } = useStateContext()
   const navigate = useNavigate()
+  const [modalOn, setModalOn] = useState(false)
+  const modal = () => {
+    setModalOn((prevState) => (prevState = true))
+  }
   useEffect(() => {
     if (!isLogin) navigate('/login')
   }, [isLogin, navigate])
@@ -32,13 +38,20 @@ const Layout = () => {
               </Link>
             </div>
             <div className="">
-              <LogoutIcon className="h-8 w-10 text-gray-200 hover:bg-gray-700 px-1 mr-5 rounded" />
+              <LogoutIcon
+                className="h-8 w-10 text-gray-200 hover:bg-gray-700 px-1 mr-5 rounded"
+                aria-hidden="true"
+                onClick={() => {
+                  modal()
+                }}
+              />
             </div>
           </div>
         </nav>
       </header>
       <main>
         <Outlet />
+        {modalOn ? <Modal setModalOn={setModalOn} /> : null}
       </main>
       <footer className="bg-gray-400 w-screen absolute bottom-0 h-14">
         <div className="flex justify-center items-center">
