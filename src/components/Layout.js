@@ -30,13 +30,13 @@ const Layout = () => {
                 className="text-sm text-gray-200 hover:bg-gray-700 px-3 py-2 rounded"
                 to="/"
               >
-                Root
+                Home
               </Link>
               <Link
                 className="text-sm text-gray-200 hover:bg-gray-700 px-3 py-2 rounded"
-                to="/component-a"
+                to="/Message"
               >
-                ComponentA
+                Message
               </Link>
             </div>
             <div className="">

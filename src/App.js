@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Login from './components/Login'
 import Root from './components/Root'
-import ComponentA from './components/ComponentA'
+import Message from './components/Message'
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Root />} />
-          <Route path="/component-a" element={<ComponentA />}/>
+          <Route path="/Message" element={<Message />}/>
         </Route>
       </Routes>
     </div>
