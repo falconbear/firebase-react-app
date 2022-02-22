@@ -1,7 +1,18 @@
+import { useEffect } from 'react'
 import { useStateContext } from '../context/StateProvider'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const { serviceName } = useStateContext()
+  const { serviceName, isLogin, setIsLogin } = useStateContext()
+  const navigate = useNavigate()
+  const login = () => {
+    setIsLogin((prevLogin) => (prevLogin = true))
+    navigate('/')
+  }
+  useEffect(() => {
+    if (isLogin) navigate('/')
+  }, [isLogin, navigate])
+
   return (
     <div>
       <div className="flex bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex-col font-mono">
@@ -43,7 +54,10 @@ const Login = () => {
           <button
             type="button"
             className="bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-          >Login</button>
+            onClick={() => login()}
+          >
+            Login
+          </button>
         </div>
       </div>
     </div>

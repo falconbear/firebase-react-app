@@ -1,10 +1,17 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import './index.css'
 import App from "./components/App"
+import { BrowserRouter } from 'react-router-dom'
+import { StateProvider } from './context/StateProvider'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StateProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StateProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 )

@@ -1,14 +1,14 @@
-import { StateProvider } from './context/StateProvider'
+import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Login from './components/Login'
 
 const App = () => {
   return (
     <div>
-      <StateProvider>
-        <Login />
-        <Layout />
-      </StateProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Layout />} />
+      </Routes>
     </div>
   )
 }
