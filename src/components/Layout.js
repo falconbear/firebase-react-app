@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link, Outlet } from 'react-router-dom'
+import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom'
 import { useStateContext } from '../context/StateProvider'
 import { LogoutIcon } from '@heroicons/react/outline'
 import Modal from './Modal'
@@ -8,6 +8,8 @@ const Layout = () => {
   const { serviceName, isLogin } = useStateContext()
   const navigate = useNavigate()
   const [modalOn, setModalOn] = useState(false)
+  const location = useLocation()
+
   const modal = () => {
     setModalOn((prevState) => (prevState = true))
   }
@@ -53,6 +55,7 @@ const Layout = () => {
         <Outlet />
         {modalOn ? <Modal setModalOn={setModalOn} /> : null}
       </main>
+      {location.pathname === '/' ? null : <Link to="/">Top</Link>}
       <footer className="bg-gray-400 w-screen absolute bottom-0 h-14">
         <div className="flex justify-center items-center">
           <p className="pt-3">{serviceName}@2021</p>
